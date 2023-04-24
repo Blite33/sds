@@ -8,6 +8,8 @@ I'm not sure about the story structure,
     (It could be either visual novel style, or it could be more adventure style)
 But I want it to feel like something that's worth working on.
 
+** IMPORTANT: I have to consider p5 additions for physics (possibly p5play) **
+
 ## *Needs* to have (Minimum viable product)
 
 - A walkable world.
@@ -33,6 +35,7 @@ But I want it to feel like something that's worth working on.
 - - Each biome should feel interesting and vibrant and mysterious at first (wondrous).
 - Maybe some sort of meta story, such that different effects are applied to the screen due to the meta story.
 - - The meta story should not be the focus, and must link to the story ingame.
+- Add a translation for french.
 
 ## Idea
 
