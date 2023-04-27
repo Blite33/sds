@@ -14,13 +14,14 @@ What I'll need to make a 2D world function:
 console.log('instantiating globals...')
 // instantiate grid globally...
 let grid = [];
+let pixelSquare = 50
 
 console.log('constructing classes...')
 class Pixel {
   constructor(x, y){
     this.color = 'black'
-    this.x = 0
-    this.y = 0
+    this.x = x
+    this.y = y
   }
 }
 
@@ -40,5 +41,10 @@ function draw() {
 }
 
 function fillGridBlackPixels() {
-
+  for(let y=0; y<pixelSquare; y++){
+    grid.push([])
+    for(let x=0; x<pixelSquare; x++){
+      grid.push(new Pixel(x,y))
+    }
+  }
 }
