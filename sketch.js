@@ -25,9 +25,21 @@ class Pixel {
   }
 }
 
+let circleSprite;
+
 function setup() {
   console.log('setting up...')
   createCanvas(windowWidth, windowHeight);
+
+  circleSprite = new Sprite();
+  circleSprite.diameter = 40;
+
+  world.gravity.y = 10
+
+  screenFloor = new Sprite();
+  screenFloor.y = height
+  screenFloor.w = width
+  screenFloor.collider = 'static'
 
   // We should have a function that fills the entire grid with black pixels. Make a cooler name than 'fillWithBlack()'
   // Note from later: function called 'fillGridBlackPixels()'
@@ -38,6 +50,15 @@ function draw() {
   // It might be better to have a grid background fill function that's called to change the background.
   // There should also be a fade to black kind of function that will fade all pixels to black.
   background(220);
+  if (kb.pressing('left')){
+    circleSprite.vel.x = -5;
+  }
+  else if (kb.pressing('right')){
+    circleSprite.vel.x = 5;
+  }
+  else if (kb.pressing('up')){
+    circleSprite.vel.y += 9;
+  }
 }
 
 function fillGridBlackPixels() {
