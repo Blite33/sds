@@ -1,25 +1,23 @@
-// Project Title
-// Your Name
+// 2D Game
+// William Harris
 // Date
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-/*
-What I'll need to make a 2D world function:
-- 2D array/grid
-- - This will need either a 3D array so we have different properties, or each pixel is an object.
-*/
-
-console.log('instantiating globals...')
+console.log('instantiating globals...');
 // instantiate grid globally...
 let grid = [];
-let pixelSquare = 50
+let pixelSquare = 50;
 
 //Find whichever dimension the screen is smaller in?
 let maximumScreenSize;
+let circleSprite;
 
-console.log('constructing classes...')
+console.log('loading assets...');
+grassTexture = loadJSON('assets/grassTexture.json')
+
+console.log('constructing classes...');
 class Pixel {
   constructor(x, y){
     this.color = 'black'
@@ -29,13 +27,11 @@ class Pixel {
 
   display() {
     stroke(this.color);
-    strokeWeight(1)
+    strokeWeight(1);
     fill(this.color);
     rect(this.x, this.y, (maximumScreenSize/pixelSquare));
   }
 }
-
-let circleSprite;
 
 function setup() {
   console.log('setting up...')
@@ -74,4 +70,25 @@ function fillGridBlackPixels() {
     }
   }
   console.log(grid);
+}
+
+function mapObjectsToPixelGrid() {
+  // Have all the objects in a list to be displayed.
+  // Make a priority system...
+  // - Background z0
+  // - Ground z1
+  // - Unused z2
+  // - Player/Objects z3
+  // - Closer Objects z4
+
+  // We need a solution for textures.
+  // It might be better to create a texture maker by hand if it's going to be that hard.
+  // Make sure you store everything in hex...
+}
+
+function loadTextures() {
+  // Find a way to save the color of the pixels to a file!
+  // How can I save objects to a file? Find a way to save the current output of the grid.
+  // - Use stringify...
+  // How can I get objects back from the file?
 }
