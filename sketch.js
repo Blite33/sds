@@ -8,14 +8,14 @@
 console.log('instantiating globals...');
 // instantiate grid globally...
 let grid = [];
-let pixelSquare = 50;
+let pixelSquare = 20;
 
 //Find whichever dimension the screen is smaller in?
 let maximumScreenSize;
 let circleSprite;
+let inputtedColor;
 
 console.log('loading assets...');
-grassTexture = loadJSON('assets/grassTexture.json')
 
 console.log('constructing classes...');
 class Pixel {
@@ -60,6 +60,7 @@ function draw() {
     }
   }
   
+  
 }
 
 function fillGridBlackPixels() {
@@ -70,20 +71,6 @@ function fillGridBlackPixels() {
     }
   }
   console.log(grid);
-}
-
-function mapObjectsToPixelGrid() {
-  // Have all the objects in a list to be displayed.
-  // Make a priority system...
-  // - Background z0
-  // - Ground z1
-  // - Unused z2
-  // - Player/Objects z3
-  // - Closer Objects z4
-
-  // We need a solution for textures.
-  // It might be better to create a texture maker by hand if it's going to be that hard.
-  // Make sure you store everything in hex...
 }
 
 function loadTextures() {
