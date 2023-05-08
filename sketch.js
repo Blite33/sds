@@ -18,18 +18,16 @@ let inputtedColor;
 console.log('loading assets...');
 
 console.log('constructing classes...');
-class Pixel {
-  constructor(x, y){
+class Texture {
+  constructor(x, y, theImage){
     this.color = 'black'
     this.x = x
     this.y = y
+    this.image = loadImage(theImage)
   }
 
   display() {
-    stroke(this.color);
-    strokeWeight(1);
-    fill(this.color);
-    rect(this.x, this.y, (maximumScreenSize/pixelSquare));
+    image(this.image, this.x, this.y, );
   }
 }
 
@@ -44,9 +42,6 @@ function setup() {
     maximumScreenSize = height;
   }
 
-  // We should have a function that fills the entire grid with black pixels. Make a cooler name than 'fillWithBlack()'
-  // Note from later: function called 'fillGridBlackPixels()'
-  fillGridBlackPixels()
 }
 
 function draw() {
@@ -54,28 +49,6 @@ function draw() {
   // It might be better to have a grid background fill function that's called to change the background.
   // There should also be a fade to black kind of function that will fade all pixels to black.
   background(255);
-  for(let y=0; y<pixelSquare; y++){
-    for(let x=0; x<pixelSquare; x++){
-      grid[y][x].display()
-    }
-  }
   
   
-}
-
-function fillGridBlackPixels() {
-  for(let y=0; y<pixelSquare; y++){
-    grid.push([])
-    for(let x=0; x<pixelSquare; x++){
-      grid[y].push(new Pixel(round(x*(maximumScreenSize/pixelSquare), 2), round(y*(maximumScreenSize/pixelSquare), 2)))
-    }
-  }
-  console.log(grid);
-}
-
-function loadTextures() {
-  // Find a way to save the color of the pixels to a file!
-  // How can I save objects to a file? Find a way to save the current output of the grid.
-  // - Use stringify...
-  // How can I get objects back from the file?
 }
