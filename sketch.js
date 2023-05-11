@@ -15,7 +15,6 @@ let maximumScreenSize;
 let circleSprite;
 let inputtedColor;
 
-let theImage = loadImage("images/pixil-frame-0.png");
 let grassTexture;
 
 console.log('constructing classes...');
@@ -44,7 +43,7 @@ function setup() {
   }
 
   console.log('loading assets...');
-  grassTexture = new Texture(0, 0, theImage);
+  grassTexture = new Texture(0, 0, loadImage("assets/pixil-frame-0.png"));
   texturesToDisplay.push(grassTexture);
 }
 
