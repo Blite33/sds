@@ -52,10 +52,12 @@ class Mob {
   move() {
     if(this.x !== this.goalX){
       if(this.x > this.goalX){
-        this.x -= (this.goalX / this.x) * 3;
+        // Backwards
+        this.x -= (this.goalX / this.x) * 9;
       }
-      else if(this.x < this.goalX){
-        this.x += (this.goalX / this.x) * 3;
+      else if(this.x <   this.goalX){
+        // Forward
+        this.x += (this.goalX / this.x) * 9;
       }
     }
   }
@@ -74,10 +76,12 @@ function setup() {
   }
 
   console.log('loading assets...');
-  grassTexture = new Texture(0, 0, loadImage("assets/pixil-frame-0.png"), 10);
-  sunTexture = new Texture(0, 100, loadImage("assets/sun_softer.png"), 100);
+  sunTexture = new Texture(100, 100, loadImage("assets/sun_softer.png"), 100);
   texturesToDisplay.push(sunTexture);
-  texturesToDisplay.push(grassTexture);
+  for(let i=0; i<10; i++){
+    let grassTexture = new Texture(i*width/10, height - 150, loadImage("assets/pixil-frame-0.png"), width/10);
+    texturesToDisplay.push(grassTexture);
+  }
 
   characterTexture = new Mob(100, loadImage("assets/char-pixil-frame-0.png"), 100)
   mobsToDisplay.push(characterTexture);
