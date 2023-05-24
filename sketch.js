@@ -22,12 +22,13 @@ let sunTexture;
 
 console.log('constructing classes...');
 class Texture {
-  constructor(x, y, theImage, scale){
-    this.color = 'black'
-    this.x = x
-    this.y = y
-    this.image = theImage
-    this.scale = scale
+  constructor(x, y, theImage, scale, xLevel){
+    this.color = 'black';
+    this.x = x;
+    this.y = y;
+    this.image = theImage;
+    this.scale = scale;
+    this.superXLevel = xLevel;
   }
 
   display() {
@@ -36,13 +37,16 @@ class Texture {
 }
 
 class Mob {
-  constructor(x, theImage, scale){
-    this.x = x
-    this.y = (height*2/3)
-    this.image = theImage
-    this.scale = scale
-    this.goalX = 0
-    this.goalY = (height*2/3)
+  constructor(x, frame0, frame1, scale, xLevel){
+    this.x = x;
+    this.y = (height*2/3);
+    this.imgFrame0 = frame0;
+    this.imgFrame1 = frame1;
+    this.image = frame0;
+    this.scale = scale;
+    this.goalX = 0;
+    this.goalY = (height*2/3);
+    this.superXLevel = xLevel
   }
 
   display() {
@@ -51,14 +55,21 @@ class Mob {
 
   move() {
     if(this.x !== this.goalX){
-      if(this.x > this.goalX){
+      this.image = this.imgFrame1;
+      if(this.x - this.goalX > 2){
         // Backwards
         this.x -= (this.goalX / this.x) * 9;
       }
-      else if(this.x <   this.goalX){
+      else if(this.x - this.goalX < -2){
         // Forward
-        this.x += (this.goalX / this.x) * 9;
+        this.x += (this.goalX / this.x) * 3;
       }
+      else{
+        this.x = this.goalX;
+      }
+    }
+    else{
+      this.image = this.imgFrame0;
     }
   }
 }
@@ -79,11 +90,11 @@ function setup() {
   sunTexture = new Texture(100, 100, loadImage("assets/sun_softer.png"), 100);
   texturesToDisplay.push(sunTexture);
   for(let i=0; i<10; i++){
-    let grassTexture = new Texture(i*width/10, height - 150, loadImage("assets/pixil-frame-0.png"), width/10);
+    let grassTexture = new Texture(i*width/10, height - 150, loadImage("assets/pixil-frame-0.png"), width/10, 0);
     texturesToDisplay.push(grassTexture);
   }
 
-  characterTexture = new Mob(100, loadImage("assets/char-pixil-frame-0.png"), 100)
+  characterTexture = new Mob(100, loadImage("assets/char-pixil-frame-0.png"), loadImage("assets/char-pixil-frame-1.png"), 100, 0)
   mobsToDisplay.push(characterTexture);
 }
 
