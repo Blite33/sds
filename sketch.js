@@ -171,7 +171,9 @@ function keyPressed(){
   if(key === 'r'){
     console.log(`INFO ${fnType} ${key} ${mouseX} ${mouseY}`);
     for(let i=0; i<mobsToDisplay.length; i++){
-      mobsToDisplay[i].goalX = mouseX;
+      if(mobsToDisplay[i].label === 'bob'){
+        mobsToDisplay[i].goalX = mouseX;
+      }
     }
   }
   else if(key === 'e'){
