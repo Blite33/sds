@@ -38,7 +38,7 @@ class Texture {
   }
 }
 
-class Mob {
+class Bob {
   constructor(label, x, frame0, frame1, scale, xLevel){
     this.label = label;
     this.x = x;
@@ -77,6 +77,51 @@ class Mob {
   }
 }
 
+class Mob {
+  constructor(label, x, frame0, frame1, scale, xLevel){
+    this.label = label;
+    this.x = x;
+    this.y = (height*2/3);
+    this.imgFrame0 = frame0;
+    this.imgFrame1 = frame1;
+    this.image = frame0;
+    this.scale = scale;
+    this.goalX = 0;
+    this.goalY = (height*2/3);
+    this.superXLevel = xLevel
+  }
+
+  display() {
+    image(this.image, this.x, this.y, this.scale, this.scale);
+  }
+
+  move() {
+    if(this.x !== this.goalX){
+      this.image = this.imgFrame1;
+      if(this.x - this.goalX > 2){
+        this.x -= 3;
+      }
+      else if(this.x - this.goalX < -2){
+        this.x += 3;
+      }
+      else{
+        this.x = this.goalX;
+      }
+    }
+    else{
+      this.image = this.imgFrame0;
+    }
+  }
+
+  idle() {
+
+  }
+
+  dialogue() {
+
+  }
+}
+
 function setup() {
   console.log('setting up...')
   createCanvas(windowWidth, windowHeight);
@@ -90,12 +135,16 @@ function setup() {
   }
 
   console.log('loading assets...');
-  texturesToDisplay.push(new Texture('sunTexture', 100, 100, loadImage("assets/sun_softer.png"), 100));
+  texturesToDisplay.push(new Texture('sunTexture', 100, 100, loadImage("assets/sun_softer.png"), 100, 0));
   for(let i=0; i<10; i++){
-    texturesToDisplay.push( new Texture('grassTexture', i*width/10, height - 150, loadImage("assets/pixil-frame-0.png"), width/10, 0));
+    texturesToDisplay.push(new Texture('grassTexture', i*width/10, height - 150, loadImage("assets/pixil-frame-0.png"), width/10, 0));
   }
 
-  mobsToDisplay.push(new Mob('bob', 100, loadImage("assets/char-pixil-frame-0.png"), loadImage("assets/char-pixil-frame-1.png"), 100, 0));
+  mobsToDisplay.push(new Bob('bob', 100, loadImage("assets/char-pixil-frame-0.png"), loadImage("assets/char-pixil-frame-1.png"), 100, 0));
+  console.log(`loaded: ${mobsToDisplay[mobsToDisplay.length-1].label}`)
+
+  mobsToDisplay.push(new Mob('cowboy', 100, loadImage("assets/cowboy-pixil-frame-0.png"), loadImage("assets/cowboy-pixil-frame-1.png"), 100, 1));
+  console.log(`loaded: ${mobsToDisplay[mobsToDisplay.length-1].label}`)
 }
 
 function draw() {
@@ -132,15 +181,9 @@ function keyPressed(){
 
 function mousePressed(){
   let fnType = 'mousePressed()';
-  console.log(`INFO ${fnType} ${MSG} Loser lost by using a mouse. Keyboards will rule the earth.`)
-  console.log(`INFO ${fnType} ${MSG} Unloading the entire game for you as a gift. Use a keyboard.`)
+  console.log(`INFO ${fnType} ${MSG} Lost by using a mouse. Keyboards will rule the earth.`)
   for(let i=0; i<texturesToDisplay.length; i++){
-    if(!(texturesToDisplay[i].label === 'sunTexture')){
-      texturesToDisplay.splice(i, 1);
-    }
-    else{
-      console.log(`INFO ${fnType} ${MSG} I'll leave the sun where it is.`)
-    }
+    texturesToDisplay.splice(i, 1);
   }
   for(let i=0; i<mobsToDisplay.length; i++){
     mobsToDisplay.splice(i, 1);
