@@ -11,6 +11,7 @@ let texturesToDisplay = [];
 let mobsToDisplay = [];
 let pixelSquare = 20;
 const MSG = 'MSG:'
+let currentLevelX = 0;
 
 //Find whichever dimension the screen is smaller in?
 let maximumScreenSize;
@@ -34,7 +35,9 @@ class Texture {
   }
 
   display() {
-    image(this.image, this.x, this.y, this.scale, this.scale);
+    if(this.superXLevel === currentLevelX){
+      image(this.image, this.x, this.y, this.scale, this.scale);
+    }
   }
 }
 
@@ -70,6 +73,11 @@ class Bob {
       else{
         this.x = this.goalX;
       }
+      if(this.x > windowWidth - 10){
+        this.x = this.goalX - width;
+        this.superXLevel++;
+        currentLevelX++;
+      }
     }
     else{
       this.image = this.imgFrame0;
@@ -92,7 +100,9 @@ class Mob {
   }
 
   display() {
-    image(this.image, this.x, this.y, this.scale, this.scale);
+    if(this.superXLevel === currentLevelX){
+      image(this.image, this.x, this.y, this.scale, this.scale);
+    }
   }
 
   move() {
