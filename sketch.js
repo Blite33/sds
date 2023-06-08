@@ -122,6 +122,8 @@ class Mob {
     this.goalX = this.x;
     this.goalY = (height*2/3);
     this.superXLevel = xLevel
+    this.dialogueYet = 0;
+    this.dialogueList = ["this town ain't big enough for the two of us.", "whaddya want?", "go on."]
   }
 
   display() {
@@ -160,7 +162,9 @@ class Mob {
   }
 
   dialogue() {
-
+    //textAlign(this.x+30, this.y-30)
+    text(this.dialogueList[this.dialogueYet])
+    dialogueYet++;
   }
 }
 
@@ -177,6 +181,8 @@ function setup() {
   }
 
   console.log('loading assets...');
+  textSize(32);
+
   texturesToDisplay.push(new Texture('sunTexture', 100, 100, loadImage("assets/sun_softer.png"), 100, 0));
   for(let i=0; i<10; i++){
     texturesToDisplay.push(new Texture('grassTexture', i*width/10, height - 150, loadImage("assets/pixil-frame-0.png"), width/10, 0));
