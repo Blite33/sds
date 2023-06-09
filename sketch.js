@@ -157,14 +157,18 @@ class Mob {
       }
       else if(this.image === this.imgFrame1){
         this.image = this.imgFrame0;
+        this.dialogueYet++;
       }
     }
   }
 
   dialogue() {
-    //textAlign(this.x+30, this.y-30)
-    text(this.dialogueList[this.dialogueYet])
-    dialogueYet++;
+    try{
+      text(this.dialogueList[this.dialogueYet], this.x+30, this.y-30)
+    }
+    catch{
+      console.log('')
+    }
   }
 }
 
@@ -182,6 +186,7 @@ function setup() {
 
   console.log('loading assets...');
   textSize(32);
+  textAlign(LEFT, TOP)
 
   texturesToDisplay.push(new Texture('sunTexture', 100, 100, loadImage("assets/sun_softer.png"), 100, 0));
   for(let i=0; i<10; i++){
@@ -232,7 +237,14 @@ function keyPressed(){
     }
   }
   else if(key === 'e'){
-    console.log(`INFO ${fnType} ${key}`);
+    console.log(`INFO ${fnType} ${key} `);
+    //find the nearest mob
+    // then display the text for that nearest mob.
+    for(let i=0; i<mobsToDisplay.length-1; i++){
+      if(mobsToDisplay[i+1].x <= mobsToDisplay[0].x + 30 && mobsToDisplay[i+1].x >= mobsToDisplay[0].x - 30){
+        mobsToDisplay[i+1].dialogue();
+      }
+    }
   }
 }
 
