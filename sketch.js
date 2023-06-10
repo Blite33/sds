@@ -12,6 +12,8 @@ let mobsToDisplay = [];
 let pixelSquare = 20;
 const MSG = 'MSG:'
 let currentLevelX = 0;
+let bob;
+let game = false;
 
 //Find whichever dimension the screen is smaller in?
 let maximumScreenSize;
@@ -193,8 +195,8 @@ function setup() {
     texturesToDisplay.push(new Texture('grassTexture', i*width/10, height - 150, loadImage("assets/pixil-frame-0.png"), width/10, 0));
   }
 
-  mobsToDisplay.push(new Bob('bob', 100, loadImage("assets/char-pixil-frame-0.png"), loadImage("assets/char-pixil-frame-1.png"), 100, 0));
-  console.log(`loaded: ${mobsToDisplay[mobsToDisplay.length-1].label}`)
+  bob = new Bob('bob', 100, loadImage("assets/char-pixil-frame-0.png"), loadImage("assets/char-pixil-frame-1.png"), 100, 0);
+  console.log(`loaded: ${bob.label}`)
 
   mobsToDisplay.push(new Mob('cowboy', width*2/3, loadImage("assets/cowboy-pixil-frame-0.png"), loadImage("assets/cowboy-pixil-frame-1.png"), 100, 1));
   console.log(`loaded: ${mobsToDisplay[mobsToDisplay.length-1].label}`)
@@ -203,25 +205,29 @@ function setup() {
 function draw() {
   background(0);
   
-  //move
-  for(let i=0; i<mobsToDisplay.length; i++){
-    mobsToDisplay[i].move();
-  }
-
-  //idle
-  for(let i=0; i<mobsToDisplay.length; i++){
-    if(mobsToDisplay[i].label !== 'bob'){
+  // This statement allows a menu to be put beforehand.
+  if(game){
+    //move
+    for(let i=0; i<mobsToDisplay.length; i++){
+      mobsToDisplay[i].move();
+    }
+  
+    //idle
+    for(let i=0; i<mobsToDisplay.length; i++){
       mobsToDisplay[i].idle();
     }
-  }
+    
+    //draw
+    for(let i=0; i<texturesToDisplay.length; i++){
+      texturesToDisplay[i].display();
+    }
+    for(let i=0; i<mobsToDisplay.length; i++){
+      mobsToDisplay[i].display();
+    }
   
-  //draw
-  for(let i=0; i<texturesToDisplay.length; i++){
-    texturesToDisplay[i].display();
+    bob.display();
   }
-  for(let i=0; i<mobsToDisplay.length; i++){
-    mobsToDisplay[i].display();
-  }
+
   // Maybe add another layer for background squares.
 }
 
@@ -230,19 +236,15 @@ function keyPressed(){
 
   if(key === 'r'){
     console.log(`INFO ${fnType} ${key} ${mouseX} ${mouseY}`);
-    for(let i=0; i<mobsToDisplay.length; i++){
-      if(mobsToDisplay[i].label === 'bob'){
-        mobsToDisplay[i].goalX = mouseX;
-      }
-    }
+    bob.goalX = mouseX;
   }
   else if(key === 'e'){
     console.log(`INFO ${fnType} ${key} `);
     //find the nearest mob
     // then display the text for that nearest mob.
     for(let i=0; i<mobsToDisplay.length-1; i++){
-      if(mobsToDisplay[i+1].x <= mobsToDisplay[0].x + 30 && mobsToDisplay[i+1].x >= mobsToDisplay[0].x - 30){
-        mobsToDisplay[i+1].dialogue();
+      if(mobsToDisplay[i].x <= bob.x + 30 || mobsToDisplay[i].x >= bob.x - 30){
+        mobsToDisplay[i].dialogue();
       }
     }
   }

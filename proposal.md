@@ -12,12 +12,12 @@ But I want it to feel like something that's worth working on.
 
 ## *Needs* to have (Minimum viable product)
 
-- A walkable world.
+- A walkable world. ✅
 - Have elements be interactable.
-- Background scenery, with different layers.
+- Background scenery, with different layers. ✅ (Different layers weren't possible, but they are rendered in a specific order.)
 - - There should be different z layers, and everything should be pushed to the pixels array only when something changes.
 - - - I don't know if there's enough processing power in one thread to render shaders. It would be nice to have shadows though.
-- NO MOUSE INTERACTION!!! Any mouse interaction is considered a fail.
+- NO MOUSE INTERACTION!!! Any mouse interaction is considered a fail. ✅ (Movement of the mouse does not count. Clicking does.)
 - SFX. Music not required, but some sort of wind blowing SFX is mandatory.
 - - Possibly use OpenGameArt for those SFX.
 
