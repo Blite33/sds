@@ -9,6 +9,7 @@ console.log('instantiating globals...');
 // instantiate grid globally...
 let texturesToDisplay = [];
 let mobsToDisplay = [];
+let textToDisplay;
 let pixelSquare = 20;
 const MSG = 'MSG:'
 let currentLevelX = 0;
@@ -188,7 +189,7 @@ function setup() {
 
   console.log('loading assets...');
   textSize(32);
-  textAlign(LEFT, TOP)
+  textAlign(CENTER, TOP)
 
   texturesToDisplay.push(new Texture('sunTexture', 100, 100, loadImage("assets/sun_softer.png"), 100, 0));
   for(let i=0; i<10; i++){
@@ -200,12 +201,19 @@ function setup() {
 
   mobsToDisplay.push(new Mob('cowboy', width*2/3, loadImage("assets/cowboy-pixil-frame-0.png"), loadImage("assets/cowboy-pixil-frame-1.png"), 100, 1));
   console.log(`loaded: ${mobsToDisplay[mobsToDisplay.length-1].label}`)
+
+  console.log('loading maps...');
+  textToDisplay = new Map();
 }
 
 function draw() {
   background(0);
   
   // This statement allows a menu to be put beforehand.
+  if(!game){
+    fill(255);
+    text("press 'e' to start...", width/2, height/2);
+  }
   if(game){
     //move
     for(let i=0; i<mobsToDisplay.length; i++){
@@ -227,8 +235,6 @@ function draw() {
   
     bob.display();
   }
-
-  // Maybe add another layer for background squares.
 }
 
 function keyPressed(){
@@ -239,24 +245,33 @@ function keyPressed(){
     bob.goalX = mouseX;
   }
   else if(key === 'e'){
-    console.log(`INFO ${fnType} ${key} `);
-    //find the nearest mob
-    // then display the text for that nearest mob.
-    for(let i=0; i<mobsToDisplay.length-1; i++){
-      if(mobsToDisplay[i].x <= bob.x + 30 || mobsToDisplay[i].x >= bob.x - 30){
-        mobsToDisplay[i].dialogue();
+    console.log(`INFO ${fnType} ${key} ${game}`);
+    if(!game){
+      game = !game;
+      console.log(`INFO gamestart ${game}`);
+    }
+    if(game){
+      // find the nearest mob
+      // then display the text for that nearest mob.
+      for(let i=0; i<mobsToDisplay.length-1; i++){
+        if(mobsToDisplay[i].x <= bob.x + 30 || mobsToDisplay[i].x >= bob.x - 30){
+          mobsToDisplay[i].dialogue();
+        }
       }
     }
+  }
+  else{
+    console.log(`INFO ${fnType} ${key} ${game}`)
   }
 }
 
 function mousePressed(){
   let fnType = 'mousePressed()';
-  console.log(`INFO ${fnType} ${MSG} Lost by using a mouse. Keyboards will rule the earth.`)
-  for(let i=0; i<texturesToDisplay.length; i++){
-    texturesToDisplay.splice(i, 1);
+  if(!game){
+    console.log(`INFO ${fnType} ${MSG} Please refrain from mouse clickage.`)
   }
-  for(let i=0; i<mobsToDisplay.length; i++){
-    mobsToDisplay.splice(i, 1);
+  if(game){
+    console.log(`INFO ${fnType} ${MSG} Lost by using a mouse. Keyboards will rule the earth.`)
+    game = !game;
   }
 }
