@@ -166,6 +166,7 @@ class Mob {
   }
 
   dialogue() {
+    //add a list to contain the text to display.
     try{
       text(this.dialogueList[this.dialogueYet], this.x+30, this.y-30)
     }
@@ -198,7 +199,7 @@ function setup() {
 
   bob = new Bob('bob', 100, loadImage("assets/char-pixil-frame-0.png"), loadImage("assets/char-pixil-frame-1.png"), 100, 0);
   console.log(`loaded: ${bob.label}`)
-
+ 
   mobsToDisplay.push(new Mob('cowboy', width*2/3, loadImage("assets/cowboy-pixil-frame-0.png"), loadImage("assets/cowboy-pixil-frame-1.png"), 100, 1));
   console.log(`loaded: ${mobsToDisplay[mobsToDisplay.length-1].label}`)
 
@@ -219,12 +220,19 @@ function draw() {
     for(let i=0; i<mobsToDisplay.length; i++){
       mobsToDisplay[i].move();
     }
+
+    bob.move();
   
     //idle
     for(let i=0; i<mobsToDisplay.length; i++){
       mobsToDisplay[i].idle();
     }
     
+    //subDraw
+    for(let i=0; i<texturesToDisplay.length; i++){
+      textToDisplay[i]
+    }
+
     //draw
     for(let i=0; i<texturesToDisplay.length; i++){
       texturesToDisplay[i].display();
