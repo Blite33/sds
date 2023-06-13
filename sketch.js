@@ -9,7 +9,7 @@ console.log('instantiating globals...');
 // instantiate grid globally...
 let texturesToDisplay = [];
 let mobsToDisplay = [];
-let textToDisplay;
+let textToDisplay = [];
 let pixelSquare = 20;
 const MSG = 'MSG:'
 let currentLevelX = 0;
@@ -21,9 +21,7 @@ let maximumScreenSize;
 let circleSprite;
 let inputtedColor;
 
-// find some better way than using globals.
-let grassTexture;
-let sunTexture;
+
 
 console.log('constructing classes...');
 class Texture {
@@ -160,20 +158,31 @@ class Mob {
       }
       else if(this.image === this.imgFrame1){
         this.image = this.imgFrame0;
-        this.dialogueYet++;
       }
     }
   }
 
   dialogue() {
     //add a list to contain the text to display.
-    try{
-      text(this.dialogueList[this.dialogueYet], this.x+30, this.y-30)
-    }
-    catch{
-      console.log('')
-    }
+    textToDisplay.push(new DisplayText(this.dialogueList[this.dialogueYet], this.x+30, this.y-30))
+    this.dialogueYet++;
   }
+}
+
+class DisplayText {
+  constructor(inputString, locationX, locationY) {
+    this.textString = inputString;
+    this.x = locationX;
+    this.y = locationY;
+  }
+
+  display() {
+    text(this.textString, this.x, this.y);
+  }
+}
+
+function preload() {
+
 }
 
 function setup() {
@@ -204,7 +213,7 @@ function setup() {
   console.log(`loaded: ${mobsToDisplay[mobsToDisplay.length-1].label}`)
 
   console.log('loading maps...');
-  textToDisplay = new Map();
+  // No maps
 }
 
 function draw() {
@@ -229,8 +238,10 @@ function draw() {
     }
     
     //subDraw
-    for(let i=0; i<texturesToDisplay.length; i++){
-      textToDisplay[i]
+    if(texturesToDisplay > 0){
+      for(let i=0; i<texturesToDisplay.length; i++){
+        textToDisplay[i].display();
+      }
     }
 
     //draw
@@ -261,8 +272,8 @@ function keyPressed(){
     if(game){
       // find the nearest mob
       // then display the text for that nearest mob.
-      for(let i=0; i<mobsToDisplay.length-1; i++){
-        if(mobsToDisplay[i].x <= bob.x + 30 || mobsToDisplay[i].x >= bob.x - 30){
+      for(let i=0; i<mobsToDisplay.length; i++){
+        if(mobsToDisplay[i].x <= bob.x + 30 || mobsToDisplay[i].x > bob.x - 30){
           mobsToDisplay[i].dialogue();
         }
       }
