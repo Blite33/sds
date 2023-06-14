@@ -181,6 +181,12 @@ class DisplayText {
   }
 }
 
+class Background {
+  constructor(theImage){
+    this.image = theImage
+  }
+}
+
 function preload() {
 
 }
@@ -217,12 +223,17 @@ function setup() {
 }
 
 function draw() {
+  // If we didn't have this background statement the entire program would look a little funny.
+  // A little goofy maybe.
   background(0);
+  fnType = 'drawLoop()'
   
   // This statement allows a menu to be put beforehand.
   if(!game){
     fill(255);
+    text
     text("press 'e' to start...", width/2, height/2);
+    text("use mouse and the 'r' key to direct your character...", width/2, height/2 + (height/24))
   }
   if(game){
     //move
@@ -236,10 +247,19 @@ function draw() {
     for(let i=0; i<mobsToDisplay.length; i++){
       mobsToDisplay[i].idle();
     }
+
+    //check
+    /*for(let i=0; i<textToDisplay.length; i++){
+      if( !(textToDisplay[i] >= bob.x - 30 || textToDisplay[i] <= bob.x + 30)){
+        textToDisplay.splice(i, 1)
+      }
+    }*/
     
     //subDraw
-    if(texturesToDisplay > 0){
-      for(let i=0; i<texturesToDisplay.length; i++){
+    //primaryBackground.display();
+
+    if(textToDisplay.length > 0){
+      for(let i=0; i<textToDisplay.length; i++){
         textToDisplay[i].display();
       }
     }
@@ -274,7 +294,10 @@ function keyPressed(){
       // then display the text for that nearest mob.
       for(let i=0; i<mobsToDisplay.length; i++){
         if(mobsToDisplay[i].x <= bob.x + 30 || mobsToDisplay[i].x > bob.x - 30){
-          mobsToDisplay[i].dialogue();
+          if(bob.superXLevel === mobsToDisplay[i].superXLevel){
+            mobsToDisplay[i].dialogue();
+            console.log(`INFO ${fnType} ${key} dialogue_success`)
+          }
         }
       }
     }
