@@ -164,16 +164,25 @@ class Mob {
 
   dialogue() {
     //add a list to contain the text to display.
-    textToDisplay.push(new DisplayText(this.dialogueList[this.dialogueYet], this.x+30, this.y-30))
+    if(textToDisplay.length > 0){
+      for(let i=0; i<textToDisplay.length; i++){
+        if(textToDisplay[i].mobLabel === this.label){
+          textToDisplay.splice(i, 1);
+        }
+      }
+    }
+    textToDisplay.push(new DisplayText(this.dialogueList[this.dialogueYet], this.x+30, this.y-30, this.label))
     this.dialogueYet++;
   }
 }
 
 class DisplayText {
-  constructor(inputString, locationX, locationY) {
+  constructor(inputString, locationX, locationY, mobLabel) {
     this.textString = inputString;
     this.x = locationX;
     this.y = locationY;
+    this.superXLevel = currentLevelX;
+    this.mobLabel = mobLabel;
   }
 
   display() {
@@ -249,11 +258,11 @@ function draw() {
     }
 
     //check
-    /*for(let i=0; i<textToDisplay.length; i++){
-      if( !(textToDisplay[i] >= bob.x - 30 || textToDisplay[i] <= bob.x + 30)){
+    for(let i=0; i<textToDisplay.length; i++){
+      if((textToDisplay[i].superXLevel !== bob.superXLevel)){
         textToDisplay.splice(i, 1)
       }
-    }*/
+    }
     
     //subDraw
     //primaryBackground.display();
